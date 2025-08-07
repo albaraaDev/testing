@@ -1,12 +1,11 @@
+import { getScratches, ScratchDTO } from '@/api/cars';
 import { toAbsoluteUrl } from '@/utils';
-import ScratchesPopover from '../../vehicle-details/components/ScratchesPopover';
 import { useEffect, useState } from 'react';
-import { ScratchDTO } from '@/api/cars';
-import { getScratches } from '@/api/cars';
+import ScratchesPopover from './ScratchesPopover';
 
 export default function VehicleScratchesDisplay({ vehicleId }: { vehicleId?: string }) {
   const [scratches, setScratches] = useState<Record<string, ScratchDTO[]> | undefined>(undefined);
-  const [offSet, setOffSet] = useState([0, 100]);
+  const [offSet] = useState([0, 100]);
 
   const groupScratchesByPlace = (scratches: ScratchDTO[]) => {
     const groupedScratches: Record<string, ScratchDTO[]> = {};

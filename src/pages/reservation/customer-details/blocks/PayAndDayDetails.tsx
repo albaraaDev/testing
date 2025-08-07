@@ -85,7 +85,7 @@ const PayAndDayDetails = ({ reservation }: { reservation: ReservationDetails }) 
   }
 
   return (
-    <div className="mt-5 grid lg:grid-cols-2 gap-5">
+    <div className="mt-5 grid xl:grid-cols-2 gap-5">
       {/* Pay Details */}
       <div className="border border-dashed border-gray-300 rounded-lg p-4">
         <h2 className="font-semibold mb-4 text-dark dark:text-white/70">

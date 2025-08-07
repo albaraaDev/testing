@@ -1,14 +1,5 @@
-import { Container } from '@/components/container';
-import { Toolbar, ToolbarActions, ToolbarHeading, ToolbarPageTitle } from '@/partials/toolbar';
-import { PageNavbar } from '@/pages/account';
-import { AddReservationPage } from '.';
-import { useParams } from 'react-router';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { useAppRouting } from '@/routing/useAppRouting';
-import { useEffect, useMemo, useState } from 'react';
 import { ResponseModel } from '@/api';
-import { useSnackbar } from 'notistack';
-import axios, { AxiosError } from 'axios';
+import { useCurrentUser } from '@/api/hooks/userHooks';
 import {
   createReservation,
   getReservationDetails,
@@ -19,9 +10,18 @@ import {
   ReservationTypeOfRent,
   updateReservation
 } from '@/api/reservations';
-import { useCurrentUser } from '@/api/hooks/userHooks';
+import { Container } from '@/components/container';
+import { PageNavbar } from '@/pages/account';
+import { Toolbar, ToolbarActions, ToolbarHeading, ToolbarPageTitle } from '@/partials/toolbar';
+import { useAppRouting } from '@/routing/useAppRouting';
+import axios, { AxiosError } from 'axios';
 import { Form, Formik } from 'formik';
+import { useSnackbar } from 'notistack';
+import { useEffect, useMemo, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useParams } from 'react-router';
 import * as Yup from 'yup';
+import { AddReservationPage } from '.';
 
 interface AddReservationForm {
   id?: string;
@@ -150,6 +150,7 @@ const AddReservation = () => {
       dropOffTime: '10:00',
       typeOfRent: 'DAILY',
       numberOfDays: 4,
+      dailyRate: 0,
       pickupLocation: 'IN_OFFICE',
       dropoffLocation: 'IN_OFFICE',
       pickUpUserId: '',
@@ -178,6 +179,7 @@ const AddReservation = () => {
       dropOffTime: reservation?.dropOffTime || initialValues.dropOffTime,
       typeOfRent: reservation?.typeOfRent || initialValues.typeOfRent,
       numberOfDays: reservation?.numberOfDays || initialValues.numberOfDays,
+      dailyRate: reservation?.dailyRate || initialValues.dailyRate,
       pickupLocation: initialValues.pickupLocation,
       dropoffLocation: reservation?.dropOffFullAddress ? 'IN_ANOTHER_ADDRESS' : 'IN_OFFICE',
       pickUpUserId: reservation?.pickUpUserId || initialValues.pickUpUserId,

@@ -1,11 +1,12 @@
-import { useParams } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { useDialogs } from '@toolpad/core/useDialogs';
-import { useAppRouting } from '@/routing/useAppRouting';
+import { deleteReservation } from '@/api/reservations';
 import { DeleteIcon, EditIcon } from '@/assets/svg';
 import ExtendIcon from '@/assets/svg/Extend';
-import { deleteReservation } from '@/api/reservations';
+import { MaintenanceIcon, ViolationsIcon } from '@/assets/svg/menu-icons-tsx';
+import { useAppRouting } from '@/routing/useAppRouting';
+import { useDialogs } from '@toolpad/core/useDialogs';
+import { useSnackbar } from 'notistack';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useParams } from 'react-router-dom';
 
 const Toolbar = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -26,6 +27,18 @@ const Toolbar = () => {
               <EditIcon className="w-4 h-4" /> <FormattedMessage id="RESERVATIONS.EDIT" />
             </button>
           </a>
+
+          <button>
+            <button className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium border-2 border-[#1BC5BD] rounded-md">
+              <MaintenanceIcon className="w-4 h-4" />
+              <FormattedMessage id="VEHICLE.TOOLBAR.MAINTENANCE" />
+            </button>
+          </button>
+
+          <button className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium border-2 border-red-500 rounded-md">
+            <ViolationsIcon className="w-4 h-4" />
+            <FormattedMessage id="VEHICLE.TOOLBAR.VIOLATIONS" />
+          </button>
 
           <a href={`/reservations/handover/${id}`}>
             <button className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium border-2 border-blue-500 rounded-md">

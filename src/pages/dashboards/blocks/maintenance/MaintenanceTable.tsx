@@ -1,18 +1,18 @@
-import { DataGrid, useDataGrid } from '@/components';
 import {
   getMaintenance,
   IMaintenanceTableData,
   updateMaintenanceStatus
 } from '@/api/maintenance.ts';
-import { useMemo, useCallback } from 'react';
-import { CellContext, ColumnDef } from '@tanstack/react-table';
-import { CarView } from '../CarView';
-import { format } from 'date-fns/fp';
+import { DataGrid, useDataGrid } from '@/components';
 import { toAbsoluteUrl } from '@/utils';
+import { CellContext, ColumnDef } from '@tanstack/react-table';
+import { format } from 'date-fns/fp';
+import { useCallback, useMemo } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { Link } from 'react-router';
+import { CarView } from '../CarView';
 import { StatusDropdown } from '../StatusDropdown';
 import { MaintenanceViolationTableProps } from './MaintenanceViolation';
-import { Link } from 'react-router';
-import { useIntl, FormattedMessage } from 'react-intl';
 
 const MaintenanceStatusDropdown = (info: CellContext<IMaintenanceTableData, unknown>) => {
   const intl = useIntl();
@@ -42,9 +42,10 @@ const MaintenanceStatusDropdown = (info: CellContext<IMaintenanceTableData, unkn
 
 interface ViolationTableProps extends MaintenanceViolationTableProps {
   searchQuery: string;
+  context?: 'vehicle' | 'reservation';
 }
 
-const MaintenanceTable = ({ searchQuery, id }: ViolationTableProps) => {
+const MaintenanceTable = ({ searchQuery, id, context = 'vehicle' }: ViolationTableProps) => {
   const intl = useIntl();
   const columns = useMemo<ColumnDef<IMaintenanceTableData>[]>(
     () => [
@@ -148,22 +149,24 @@ const MaintenanceTable = ({ searchQuery, id }: ViolationTableProps) => {
     ],
     [intl]
   );
-  const filters = useMemo(
-    () => [
-      ...(searchQuery.trim().length > 2
-        ? [
-            {
-              id: '__any',
-              value: searchQuery
-            }
-          ]
-        : []),
-      ...(id ? [{ id: 'vehicleId', value: id }] : [])
-    ],
-    [searchQuery, id]
-  );
 
-  const onFetchData = useCallback((params: any) => getMaintenance(params), []);
+  const filters = useMemo(() => {
+    const baseFilters = [
+      ...(searchQuery.trim().length > 2 ? [{ id: '__any', value: searchQuery }] : [])
+    ];
+
+    if (id) {
+      if (context === 'reservation') {
+        baseFilters.push({ id: 'reservationId', value: id });
+      } else {
+        baseFilters.push({ id: 'vehicleId', value: id });
+      }
+    }
+
+    return baseFilters;
+  }, [searchQuery, id, context]);
+
+  const onFetchData = useCallback((params: any) => getMaintenance(params, context), [context]);
 
   return (
     <DataGrid

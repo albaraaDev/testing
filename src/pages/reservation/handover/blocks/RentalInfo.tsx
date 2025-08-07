@@ -1,7 +1,8 @@
 import FormikFileUpload from '@/pages/vehicle/add-vehicle/components/FormikFileUpload';
 import { Field, FieldProps } from 'formik';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { AdditionalServicesSection, InsuranceSection } from '../../add-reservation/blocks';
+
+import { AdditionalServicesSection, InsuranceSection } from '../../blocks/AdditionalServices';
 import { AddReservationPageProps } from '../HandOverPage';
 
 const RentalInfo = (props: AddReservationPageProps) => {

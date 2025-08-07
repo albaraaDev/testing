@@ -1,11 +1,11 @@
+import { CustomerDetails, getCustomers } from '@/api/customers';
 import { KeenIcon } from '@/components';
 import { Skeleton } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
-import { AutoSizer, List } from 'react-virtualized';
-import { FormattedMessage, useIntl } from 'react-intl';
 import { useQuery } from '@tanstack/react-query';
-import { CustomerDetails, getCustomers } from '@/api/customers';
 import { Field, useField, useFormikContext } from 'formik';
+import { useEffect, useMemo, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { AutoSizer, List } from 'react-virtualized';
 
 interface CustomerSearchProps {
   idFieldName: string;
@@ -48,7 +48,7 @@ export const CustomerSearch = ({
     if (field.value) {
       setPrivateSearch(shownCustomers.find((x) => x.id === field.value)?.fullName || '');
     }
-  }, [field.value]);
+  }, [field.value, shownCustomers]);
 
   const { data: customers } = useQuery({
     queryKey: ['customers', privateSearch],
@@ -94,6 +94,7 @@ export const CustomerSearch = ({
           type="button"
           onClick={() => {
             setFieldValue(idFieldName, '');
+            setPrivateSearch('');
           }}
         >
           <KeenIcon icon="cross" />

@@ -1,32 +1,32 @@
-import Toolbar from './components/Toolbar.tsx';
+import FileList from '@/components/FileList.tsx';
 import {
+  ColorIcon,
+  FuelTypeIcon,
+  GearIcon,
   ModelIcon,
   ModelSeriesIcon,
   ModelYearIcon,
-  FuelTypeIcon,
-  GearIcon,
-  VolumeIcon,
   PowerIcon,
-  ColorIcon,
-  TypeIcon
+  TypeIcon,
+  VolumeIcon
 } from '../blocks/svg/index.ts';
-import FileList from '@/components/FileList.tsx';
-import VehicleMetrics from '../blocks/details-components/VehicleMetrics.tsx';
+import Toolbar from './components/Toolbar.tsx';
 // import GeofenceList from '../blocks/details-components/GeofenceList.tsx';
-import TripList from '../blocks/details-components/TripList.tsx';
-import VehicleWorkingPeriods from '../blocks/details-components/VehicleWorkingPeriods.tsx';
-import { useParams } from 'react-router-dom';
-import { CarPlate } from '@/pages/dashboards/blocks/CarPlate.tsx';
-import { useEffect, useMemo, useState } from 'react';
-import VehicleInfoCard from './components/VehicleInfoCard.tsx';
 import { getVehicleDetails, VehicleDTO } from '@/api/cars.ts';
-import { MaintenanceViolationTable } from '@/pages/dashboards/blocks/maintenance/MaintenanceViolation.tsx';
-import VehicleCurrentLocation from './components/VehicleCurrentLocation.tsx';
-import VehicleScratchesDisplay from '../add-vehicle/blocks/VehicleScratchesDisplay.tsx';
-import VehicleInsuranceIcon from '../blocks/svg/VehicleInsuranceIcon.tsx';
-import { useIntl, FormattedMessage } from 'react-intl';
 import { Report } from '@/components';
+import TripList from '@/components/blocks/TripList.tsx';
+import VehicleMetrics from '@/components/blocks/VehicleMetrics.tsx';
+import VehicleScratchesDisplay from '@/components/blocks/VehicleScratchesDisplay.tsx';
+import { CarPlate } from '@/pages/dashboards/blocks/CarPlate.tsx';
+import { MaintenanceViolationTable } from '@/pages/dashboards/blocks/maintenance/MaintenanceViolation.tsx';
 import { Notifications } from '@/pages/dashboards/blocks/Notifications.tsx';
+import { useEffect, useMemo, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useParams } from 'react-router-dom';
+import VehicleWorkingPeriods from '../blocks/details-components/VehicleWorkingPeriods.tsx';
+import VehicleInsuranceIcon from '../blocks/svg/VehicleInsuranceIcon.tsx';
+import VehicleCurrentLocation from './components/VehicleCurrentLocation.tsx';
+import VehicleInfoCard from './components/VehicleInfoCard.tsx';
 
 // const geofences = [
 //   'ISTANBUL',

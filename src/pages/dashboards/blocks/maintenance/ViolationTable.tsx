@@ -1,13 +1,13 @@
-import { DataGrid, useDataGrid } from '@/components';
 import { getViolations, updateViolationStatus, Violation } from '@/api/cars';
-import { useMemo, useCallback } from 'react';
-import { CellContext, ColumnDef } from '@tanstack/react-table';
-import { CarView } from '../CarView';
-import { format } from 'date-fns/fp';
+import { DataGrid, useDataGrid } from '@/components';
 import { toAbsoluteUrl } from '@/utils';
+import { CellContext, ColumnDef } from '@tanstack/react-table';
+import { format } from 'date-fns/fp';
+import { useCallback, useMemo } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { CarView } from '../CarView';
 import { StatusDropdown } from '../StatusDropdown';
 import { MaintenanceViolationTableProps } from './MaintenanceViolation';
-import { FormattedMessage, useIntl } from 'react-intl';
 
 const ViolationStatusDropdown = (info: CellContext<Violation, unknown>) => {
   const intl = useIntl();
@@ -47,9 +47,10 @@ const ViolationStatusDropdown = (info: CellContext<Violation, unknown>) => {
 
 interface ViolationTableProps extends MaintenanceViolationTableProps {
   searchQuery: string;
+  context?: 'vehicle' | 'reservation';
 }
 
-const ViolationTable = ({ searchQuery, id }: ViolationTableProps) => {
+const ViolationTable = ({ searchQuery, id, context = 'vehicle' }: ViolationTableProps) => {
   const intl = useIntl();
   const columns = useMemo<ColumnDef<Violation>[]>(
     () => [
@@ -151,22 +152,24 @@ const ViolationTable = ({ searchQuery, id }: ViolationTableProps) => {
     ],
     [intl]
   );
-  const filters = useMemo(
-    () => [
-      ...(searchQuery.trim().length > 2
-        ? [
-            {
-              id: '__any',
-              value: searchQuery
-            }
-          ]
-        : []),
-      ...(id ? [{ id: 'vehicleId', value: id }] : [])
-    ],
-    [searchQuery, id]
-  );
 
-  const onFetchData = useCallback((params: any) => getViolations(params), []);
+  const filters = useMemo(() => {
+    const baseFilters = [
+      ...(searchQuery.trim().length > 2 ? [{ id: '__any', value: searchQuery }] : [])
+    ];
+
+    if (id) {
+      if (context === 'reservation') {
+        baseFilters.push({ id: 'reservationId', value: id });
+      } else {
+        baseFilters.push({ id: 'vehicleId', value: id });
+      }
+    }
+
+    return baseFilters;
+  }, [searchQuery, id, context]);
+
+  const onFetchData = useCallback((params: any) => getViolations(params, context), [context]);
 
   return (
     <DataGrid

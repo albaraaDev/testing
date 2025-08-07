@@ -67,7 +67,7 @@ const ReservationCustomerDetail = ({ reservation, customer }: ReservationCustome
     };
 
     return (
-      <div className="border border-dashed border-[#E4E6EF] rounded-md p-4 w-64">
+      <div className="border border-dashed border-[#E4E6EF] rounded-md p-4 xl:max-w-64">
         <div className="text-2xl font-bold text-gray-800 mb-1">
           {duration} {getPeriodLabel()}
         </div>
@@ -90,7 +90,7 @@ const ReservationCustomerDetail = ({ reservation, customer }: ReservationCustome
     typeKey: string;
     color: string;
   }) => (
-    <div className="border border-dashed border-[#E4E6EF] rounded-md p-4 w-64">
+    <div className="border border-dashed border-[#E4E6EF] rounded-md p-4 xl:max-w-64">
       <div className="text-2xl font-bold text-gray-800 mb-1">{formatDate(date)}</div>
       <div className="text-s text-gray-600 mb-2">{time || 'N/A'}</div>
       <div className="text-m font-semibold" style={{ color }}>

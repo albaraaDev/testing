@@ -1,10 +1,11 @@
 import { MaintenanceModel } from '@/api/maintenance';
 import { VehicleSearch } from '@/pages/driver/add-driver/blocks/VehicleSearch';
-import { MaintenanceTypeDropdownSearch } from '../components';
-import { useState } from 'react';
 import { format } from 'date-fns';
+import { useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useSearchParams } from 'react-router';
-import { useIntl, FormattedMessage } from 'react-intl';
+import { MaintenanceTypeDropdownSearch } from '../components';
+import { ReservationSearch } from './ReservationSearch';
 
 export interface AddMaintenancePageProps {
   maintenance?: MaintenanceModel;
@@ -25,6 +26,21 @@ const AddMaintenancePage = ({ maintenance }: AddMaintenancePageProps) => {
         </div>
 
         <div className="card-body grid gap-5">
+          {/* Reservation Search */}
+          <ReservationSearch
+            initialSearch={
+              maintenance?.reservationId && maintenance?.customerId && maintenance?.vehiclePlate
+                ? {
+                    id: maintenance.reservationId,
+                    customerId: maintenance.customerId,
+                    vehiclePlate: maintenance.vehiclePlate
+                  }
+                : undefined
+            }
+            required={false}
+            place="bottom"
+          />
+
           <div className="grid lg:grid-cols-2 gap-5">
             <div className="flex flex-col gap-2.5">
               <label className="form-label">

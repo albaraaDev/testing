@@ -1,15 +1,15 @@
-import Toolbar from './Toolbar';
+import { DriverDetails, getDriver } from '@/api/drivers';
+import TripList from '@/components/blocks/TripList';
+import { useAppRouting } from '@/routing/useAppRouting';
+import { useEffect, useMemo, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useParams } from 'react-router';
 import FileList, { FileInfo } from '../../components/FileList';
+import { MaintenanceViolationTable } from '../dashboards/blocks/maintenance/MaintenanceViolation';
+import VehicleCurrentLocation from '../vehicle/vehicle-details/components/VehicleCurrentLocation';
 import Card from './details-components/Card';
 import ProfileCard from './ProfileCard';
-import { useParams } from 'react-router';
-import { useEffect, useMemo, useState } from 'react';
-import { DriverDetails, getDriver } from '@/api/drivers';
-import { MaintenanceViolationTable } from '../dashboards/blocks/maintenance/MaintenanceViolation';
-import TripList from '../vehicle/blocks/details-components/TripList';
-import VehicleCurrentLocation from '../vehicle/vehicle-details/components/VehicleCurrentLocation';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { useAppRouting } from '@/routing/useAppRouting';
+import Toolbar from './Toolbar';
 
 const DriverDetailsPage = () => {
   const { id } = useParams();

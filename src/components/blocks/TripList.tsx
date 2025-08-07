@@ -1,23 +1,23 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
+  getFirstTripDate,
   IntervalType,
   searchTrips,
   Trip,
   TripGroup,
-  TripPath,
-  getFirstTripDate
+  TripPath
 } from '@/api/trips';
+import AppMap from '@/components/AppMap';
+import { ButtonRadioGroup } from '@/pages/dashboards/blocks/ButtonRadioGroup';
+import { getColor } from '@/pages/trips/blocks/PolylineColors';
 import TripCard from '@/pages/trips/blocks/TripCard';
 import { TripsContext } from '@/pages/trips/providers/TripsContext';
-import L from 'leaflet';
 import { toAbsoluteUrl } from '@/utils';
-import AppMap from '@/components/AppMap';
-import { Marker, Polyline } from 'react-leaflet';
-import { getColor } from '@/pages/trips/blocks/PolylineColors';
-import { useIntl } from 'react-intl';
-import { ButtonRadioGroup } from '@/pages/dashboards/blocks/ButtonRadioGroup';
-import { CircularProgress } from '@mui/material';
 import { getDateRangeArray } from '@/utils/GetDateRangeArray';
+import { CircularProgress } from '@mui/material';
+import L from 'leaflet';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { Marker, Polyline } from 'react-leaflet';
 
 interface TripListProps {
   vehicleId?: string;

@@ -1,15 +1,16 @@
-import { useState } from 'react';
-import { useIntl, FormattedMessage } from 'react-intl';
 import { KeenIcon } from '@/components';
+import { useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { ButtonRadioGroup } from '../ButtonRadioGroup';
-import { ViolationTable } from './ViolationTable';
 import { MaintenanceTable } from './MaintenanceTable';
+import { ViolationTable } from './ViolationTable';
 
 export interface MaintenanceViolationTableProps {
   id?: string;
+  context?: 'vehicle' | 'reservation';
 }
 
-const MaintenanceViolationTable = ({ id }: MaintenanceViolationTableProps) => {
+const MaintenanceViolationTable = ({ id, context = 'vehicle' }: MaintenanceViolationTableProps) => {
   const intl = useIntl();
   const [selection, setSelection] = useState('Maintenance');
   const [searchQuery, setSearchQuery] = useState('');
@@ -44,8 +45,12 @@ const MaintenanceViolationTable = ({ id }: MaintenanceViolationTableProps) => {
         </div>
       </div>
       <div className="card-body h-full">
-        {selection === 'Violation' && <ViolationTable searchQuery={searchQuery} id={id} />}
-        {selection === 'Maintenance' && <MaintenanceTable searchQuery={searchQuery} id={id} />}
+        {selection === 'Violation' && (
+          <ViolationTable searchQuery={searchQuery} id={id} context={context} />
+        )}
+        {selection === 'Maintenance' && (
+          <MaintenanceTable searchQuery={searchQuery} id={id} context={context} />
+        )}
       </div>
     </div>
   );
