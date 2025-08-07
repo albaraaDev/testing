@@ -1,0 +1,29 @@
+/* Tailwind core */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Demos */
+@import 'demos/demo1';
+
+.card {
+  @apply dark:border-gray-200;
+
+  .card-header {
+    @apply dark:border-gray-200;
+  }
+
+  .card-body {
+    @apply dark:border-gray-200;
+  }
+
+  .card-footer {
+    @apply dark:border-gray-200;
+  }
+}
+
+.report-table-container {
+  @apply [&_table>thead>tr>th]:border [&_table>thead>tr>th]:!rounded-t-none [&_table>tbody>tr>td]:border;
+  @apply [&_table>thead>tr>th]:border-[#F1F1F4] [&_table>thead>tr>th]:bg-[#FCFCFC] [&_table>tbody>tr>td]:border-[#F1F1F4];
+  @apply dark:[&_table>thead>tr>th]:border-gray-200 dark:[&_table>thead>tr>th]:bg-dark dark:[&_table>tbody>tr>td]:border-gray-200;
+}

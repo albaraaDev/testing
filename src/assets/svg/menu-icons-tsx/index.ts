@@ -1,0 +1,13 @@
+export { default as CustomerIcon } from './CustomerIcon';
+export { default as DashboardIcon } from './DashboardIcon';
+export { default as DeviceIcon } from './DeviceIcon';
+export { default as DriverIcon } from './DriverIcon';
+export { default as GeofenceIcon } from './GeofenceIcon';
+export { default as MaintenanceIcon } from './MaintenanceIcon';
+export { default as MonitoringIcon } from './MonitoringIcon';
+export { default as ReportsIcon } from './ReportsIcon';
+export { default as ReservationsIcon } from './ReservationsIcon';
+export { default as TripsIcon } from './TripsIcon';
+export { default as UserIcon } from './UserIcon';
+export { default as VehicleIcon } from './VehicleIcon';
+export { default as ViolationsIcon } from './ViolationsIcon';
