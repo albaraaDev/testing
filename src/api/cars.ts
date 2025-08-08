@@ -1,12 +1,12 @@
 import { TDataGridRequestParams } from '@/components';
-import { OffsetBounds, Paginated } from './common';
-import { Driver } from './drivers';
-import { getUser, User } from './user';
-import { axios } from './axios';
-import { PaginatedResponseModel, ResponseModel, ResponseModelOrNull } from './response';
-import { getDevice, getDeviceModelByImei } from './devices';
-import { objectToFormData, toAbsoluteUrl } from '@/utils';
 import { CarType, FuelType, GearType, RegistrationType } from '@/pages/vehicle/add-vehicle';
+import { objectToFormData, toAbsoluteUrl } from '@/utils';
+import { axios } from './axios';
+import { OffsetBounds, Paginated } from './common';
+import { getDevice, getDeviceModelByImei } from './devices';
+import { Driver } from './drivers';
+import { PaginatedResponseModel, ResponseModel, ResponseModelOrNull } from './response';
+import { getUser, User } from './user';
 
 export interface CarCountsDTO {
   total: number;
@@ -208,7 +208,8 @@ export interface Violation {
 }
 
 export const getViolations = async (
-  params: TDataGridRequestParams
+  params: TDataGridRequestParams,
+  context: 'vehicle' | 'reservation' = 'vehicle'
 ): Promise<Paginated<Violation>> => {
   // Convert filters to map
   const filters =
@@ -219,21 +220,25 @@ export const getViolations = async (
       },
       {} as Record<string, unknown>
     ) ?? {};
-  const violations = await axios.get<PaginatedResponseModel<ViolationDTO>>(
-    filters['vehicleId']
-      ? `/api/violations/get-by-vehicle-id/${filters['vehicleId']}`
-      : '/api/violations/index',
-    {
-      params: {
-        page: params.pageIndex,
-        size: params.pageSize,
-        search: filters['__any'] && filters['__any'].toString(),
-        ...(params.sorting?.[0] && {
-          sort: `${params.sorting[0].id},${params.sorting[0].desc ? 'desc' : 'asc'}`
-        })
-      }
+
+  let endpoint = '/api/violations/index';
+
+  if (context === 'reservation' && filters['reservationId']) {
+    endpoint = `/api/violations/get-by-reservation-id/${filters['reservationId']}`;
+  } else if (filters['vehicleId']) {
+    endpoint = `/api/violations/get-by-vehicle-id/${filters['vehicleId']}`;
+  }
+
+  const violations = await axios.get<PaginatedResponseModel<ViolationDTO>>(endpoint, {
+    params: {
+      page: params.pageIndex,
+      size: params.pageSize,
+      search: filters['__any'] && filters['__any'].toString(),
+      ...(params.sorting?.[0] && {
+        sort: `${params.sorting[0].id},${params.sorting[0].desc ? 'desc' : 'asc'}`
+      })
     }
-  );
+  });
 
   const usersPromise = violations.data.result.content.map((violation) => getUser(violation.userId));
   const users = await Promise.all(usersPromise);

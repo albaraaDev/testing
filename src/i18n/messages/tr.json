@@ -1038,5 +1038,22 @@
   "CUSTOMER.GRID.HEADER.DATE_OF_BIRTH": "Doğum Tarihi",
   "CUSTOMER.CARD.VIEW": "Görüntüle",
   "CUSTOMER.CARD.EDIT": "Düzenle",
-  "CUSTOMER.CARD.DELETE": "Sil"
+  "CUSTOMER.CARD.DELETE": "Sil",
+  "ADDITIONAL_SERVICES.PAGE.TITLE": "Ek Hizmetler",
+  "ADDITIONAL_SERVICES.LIST.TITLE": "Ek Hizmetler Listesi",
+  "ADDITIONAL_SERVICES.LIST.DESCRIPTION": "Müşterilere sunulan ek hizmetleri yönet",
+  "ADDITIONAL_SERVICES.TABLE.IMAGE": "Resim / Simge",
+  "ADDITIONAL_SERVICES.TABLE.NAME": "Hizmet Adları",
+  "ADDITIONAL_SERVICES.TABLE.DESCRIPTION": "Hizmet Açıklaması",
+  "ADDITIONAL_SERVICES.TABLE.PRICE": "Fiyat",
+  "ADDITIONAL_SERVICES.TABLE.MAX_QUANTITY": "Maksimum sayı",
+  "ADDITIONAL_SERVICES.FORM.NAME_PLACEHOLDER": "Hizmet adını girin",
+  "ADDITIONAL_SERVICES.FORM.DESCRIPTION_PLACEHOLDER": "Hizmet açıklamasını girin",
+  "ADDITIONAL_SERVICES.ADD_NEW": "Yeni Hizmet Ekle",
+  "ADDITIONAL_SERVICES.DELETE.MODAL_TITLE": "Hizmeti Sil",
+  "ADDITIONAL_SERVICES.DELETE.MODAL_MESSAGE": "Bu hizmeti silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+  "ADDITIONAL_SERVICES.CREATE_SUCCESS": "Hizmet başarıyla eklendi",
+  "ADDITIONAL_SERVICES.CREATE_ERROR": "Hizmet eklenirken hata oluştu",
+  "ADDITIONAL_SERVICES.DELETE_SUCCESS": "Hizmet başarıyla silindi",
+  "ADDITIONAL_SERVICES.DELETE_ERROR": "Hizmet silinirken hata oluştu"
 }

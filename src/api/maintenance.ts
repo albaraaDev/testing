@@ -1,9 +1,9 @@
-import { TDataGridRequestParams } from '@/components';
-import { Paginated } from '@/api/common.ts';
 import { axios } from '@/api/axios.ts';
-import { PaginatedResponseModel, ResponseModel, ResponseModelOrNull } from '@/api/response.ts';
-import React from 'react';
 import { Vehicle } from '@/api/cars.ts';
+import { Paginated } from '@/api/common.ts';
+import { PaginatedResponseModel, ResponseModel, ResponseModelOrNull } from '@/api/response.ts';
+import { TDataGridRequestParams } from '@/components';
+import React from 'react';
 
 export interface Maintenance {
   id: string;
@@ -18,6 +18,8 @@ export interface Maintenance {
 export interface MaintenanceModel {
   id: string;
   type: string;
+  reservationId: string;
+  customerId: string;
   description: string;
   supplier: string;
   startDate: string;
@@ -90,7 +92,8 @@ export const getMaintenanceStats = async (): Promise<IMaintenanceStats> => {
 };
 
 export const getMaintenance = async (
-  params: TDataGridRequestParams
+  params: TDataGridRequestParams,
+  context: 'vehicle' | 'reservation' = 'vehicle'
 ): Promise<Paginated<IMaintenanceTableData>> => {
   const filters =
     params.filters?.reduce(
@@ -100,21 +103,25 @@ export const getMaintenance = async (
       },
       {} as Record<string, unknown>
     ) ?? {};
-  const maintenances = await axios.get<PaginatedResponseModel<MaintenanceModel>>(
-    filters['vehicleId']
-      ? `/api/maintenances/get-by-vehicle-id/${filters['vehicleId']}`
-      : '/api/maintenances/index',
-    {
-      params: {
-        page: params.pageIndex,
-        size: params.pageSize,
-        search: filters['__any'] && filters['__any'].toString(),
-        ...(params.sorting?.[0] && {
-          sort: `${params.sorting[0].id},${params.sorting[0].desc ? 'desc' : 'asc'}`
-        })
-      }
+
+  let endpoint = '/api/maintenances/index';
+
+  if (context === 'reservation' && filters['reservationId']) {
+    endpoint = `/api/maintenances/get-by-reservation-id/${filters['reservationId']}`;
+  } else if (filters['vehicleId']) {
+    endpoint = `/api/maintenances/get-by-vehicle-id/${filters['vehicleId']}`;
+  }
+
+  const maintenances = await axios.get<PaginatedResponseModel<MaintenanceModel>>(endpoint, {
+    params: {
+      page: params.pageIndex,
+      size: params.pageSize,
+      search: filters['__any'] && filters['__any'].toString(),
+      ...(params.sorting?.[0] && {
+        sort: `${params.sorting[0].id},${params.sorting[0].desc ? 'desc' : 'asc'}`
+      })
     }
-  );
+  });
 
   return {
     data: maintenances.data.result.content.map((maintenance) => ({

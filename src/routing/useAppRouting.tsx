@@ -28,6 +28,7 @@ export type AppRoute =
   | `${Prefix}reservations/add-reservation`
   | `${Prefix}reservations/edit/${ID}`
   | `${Prefix}reservations/handover/${ID}`
+  | `${Prefix}reservations/additional-services`
   | `${Prefix}vehicles/vehicle`
   | `${Prefix}vehicles/vehicle/${ID}`
   | `${Prefix}vehicles/add-vehicle`

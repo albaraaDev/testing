@@ -1,17 +1,17 @@
+import { Cell, flexRender, Row } from '@tanstack/react-table'; // Import Row and Cell types
 import { Fragment } from 'react';
 import {
-  useDataGrid,
   DataGridLoader,
   DataGridTable,
   DataGridTableBody,
   DataGridTableBodyCell,
   DataGridTableBodyRow,
+  DataGridTableEmpty,
   DataGridTableHead,
   DataGridTableHeadCell,
-  DataGridTableEmpty,
-  DataGridToolbar
+  DataGridToolbar,
+  useDataGrid
 } from '..'; // Ensure these imports are correct
-import { flexRender, Row, Cell } from '@tanstack/react-table'; // Import Row and Cell types
 
 const DataGridInner = <TData extends object>() => {
   const { loading, table, props } = useDataGrid();
@@ -34,6 +34,7 @@ const DataGridInner = <TData extends object>() => {
               <DataGridTableHead>{props.supplementaryHeaderRow}</DataGridTableHead>
             )}
             <DataGridTableBody>
+              {props.customFirstRow && <tr className="border-b">{props.customFirstRow}</tr>}
               {table.getRowModel().rows.length > 0 ? (
                 table.getRowModel().rows.map((row: Row<TData>, rowIndex: number) => (
                   <DataGridTableBodyRow key={rowIndex} id={row.id}>

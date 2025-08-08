@@ -185,6 +185,26 @@ export interface ReservationStats {
   completed: number;
 }
 
+export interface CreateAdditionalServiceRequest {
+  type: string;
+  nameEn: string;
+  nameAr: string;
+  nameTr: string;
+  descriptionEn: string;
+  descriptionAr: string;
+  descriptionTr: string;
+  unit: string;
+  defaultPrice: number;
+  specialPrice?: number;
+  maxQuantity: number;
+  status?: boolean;
+  imageFile?: File;
+}
+
+export interface UpdateAdditionalServiceRequest extends CreateAdditionalServiceRequest {
+  id: string;
+}
+
 export const getReservationsBy = async (
   params: TDataGridRequestParams | OffsetBounds,
   customerId?: string
@@ -242,6 +262,7 @@ export const getReservationsStats = async (): Promise<ReservationStats> => {
 };
 
 export const getAdditionalServices = async (params?: {
+  type?: 'service' | 'insurance';
   page?: number;
   offset?: number;
   size?: number;
@@ -249,6 +270,7 @@ export const getAdditionalServices = async (params?: {
   sort?: string;
 }): Promise<Paginated<AdditionalService>> => {
   const requestParams = {
+    type: params?.type || 'service',
     page: params?.page || 0,
     offset: params?.offset || 0,
     size: params?.size || 50,
@@ -267,6 +289,80 @@ export const getAdditionalServices = async (params?: {
     data: response.data.result.content,
     totalCount: response.data.result.totalElements
   };
+};
+
+export const createAdditionalService = async (
+  serviceData: CreateAdditionalServiceRequest
+): Promise<ResponseModel<AdditionalService>> => {
+  const formData = new FormData();
+
+  // Add all service fields to form data
+  Object.entries(serviceData).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) {
+      if (key === 'imageFile' && value instanceof File) {
+        formData.append('imageFile', value);
+      } else {
+        formData.append(key, value.toString());
+      }
+    }
+  });
+
+  const response = await axios.post<ResponseModel<AdditionalService>>(
+    '/api/reservations/additional-services/create',
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }
+  );
+
+  return response.data;
+};
+
+export const updateAdditionalService = async (
+  serviceData: UpdateAdditionalServiceRequest
+): Promise<ResponseModel<AdditionalService>> => {
+  const formData = new FormData();
+
+  // Add all service fields to form data
+  Object.entries(serviceData).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) {
+      if (key === 'imageFile' && value instanceof File) {
+        formData.append('imageFile', value);
+      } else {
+        formData.append(key, value.toString());
+      }
+    }
+  });
+
+  const response = await axios.put<ResponseModel<AdditionalService>>(
+    `/api/reservations/additional-services/update`,
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }
+  );
+
+  return response.data;
+};
+
+export const deleteAdditionalService = async (id: string): Promise<ResponseModel<never>> => {
+  const response = await axios.delete<ResponseModel<never>>(
+    `/api/reservations/additional-services/delete/${id}`
+  );
+
+  return response.data;
+};
+
+export const getAdditionalServiceById = async (id: string): Promise<AdditionalService> => {
+  const response = await axios.get<ResponseModel<AdditionalService>>(
+    `/api/reservations/additional-services/show/${id}`
+  );
+
+  return response.data.result;
 };
 
 export const deleteReservation = async (

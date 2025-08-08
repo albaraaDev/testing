@@ -154,7 +154,7 @@ const AddReservation = () => {
       pickupLocation: 'IN_OFFICE',
       dropoffLocation: 'IN_OFFICE',
       pickUpUserId: '',
-      dropOffUserId: '',
+      dropOffUserId: currentUser?.id,
       selectedInsurance: '',
       additionalServices: []
     };

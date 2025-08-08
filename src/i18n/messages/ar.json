@@ -1029,5 +1029,22 @@
   "CUSTOMER.GRID.HEADER.DATE_OF_BIRTH": "تاريخ الميلاد",
   "CUSTOMER.CARD.VIEW": "عرض",
   "CUSTOMER.CARD.EDIT": "تعديل",
-  "CUSTOMER.CARD.DELETE": "حذف"
+  "CUSTOMER.CARD.DELETE": "حذف",
+  "ADDITIONAL_SERVICES.PAGE.TITLE": "الخدمات الإضافية",
+  "ADDITIONAL_SERVICES.LIST.TITLE": "قائمة الخدمات الإضافية",
+  "ADDITIONAL_SERVICES.LIST.DESCRIPTION": "إدارة الخدمات الإضافية المقدمة للعملاء",
+  "ADDITIONAL_SERVICES.TABLE.IMAGE": "صورة / أيقونة",
+  "ADDITIONAL_SERVICES.TABLE.NAME": "اسم الخدمات",
+  "ADDITIONAL_SERVICES.TABLE.DESCRIPTION": "وصف الخدمة",
+  "ADDITIONAL_SERVICES.TABLE.PRICE": "السعر",
+  "ADDITIONAL_SERVICES.TABLE.MAX_QUANTITY": "الحد الأقصى للعدد",
+  "ADDITIONAL_SERVICES.FORM.NAME_PLACEHOLDER": "أدخل اسم الخدمة",
+  "ADDITIONAL_SERVICES.FORM.DESCRIPTION_PLACEHOLDER": "أدخل وصف الخدمة",
+  "ADDITIONAL_SERVICES.ADD_NEW": "إضافة خدمة جديدة",
+  "ADDITIONAL_SERVICES.DELETE.MODAL_TITLE": "حذف الخدمة",
+  "ADDITIONAL_SERVICES.DELETE.MODAL_MESSAGE": "هل أنت متأكد أنك تريد حذف هذه الخدمة؟ هذا الإجراء لا يمكن التراجع عنه.",
+  "ADDITIONAL_SERVICES.CREATE_SUCCESS": "تم إضافة الخدمة بنجاح",
+  "ADDITIONAL_SERVICES.CREATE_ERROR": "خطأ في إضافة الخدمة",
+  "ADDITIONAL_SERVICES.DELETE_SUCCESS": "تم حذف الخدمة بنجاح",
+  "ADDITIONAL_SERVICES.DELETE_ERROR": "خطأ في حذف الخدمة"
 }

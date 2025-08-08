@@ -1,19 +1,40 @@
-import { deleteReservation } from '@/api/reservations';
+import { CustomerDetails } from '@/api/customers';
+import { deleteReservation, ReservationDetails } from '@/api/reservations';
 import { DeleteIcon, EditIcon } from '@/assets/svg';
 import ExtendIcon from '@/assets/svg/Extend';
 import { MaintenanceIcon, ViolationsIcon } from '@/assets/svg/menu-icons-tsx';
 import { useAppRouting } from '@/routing/useAppRouting';
 import { useDialogs } from '@toolpad/core/useDialogs';
 import { useSnackbar } from 'notistack';
+import { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useParams } from 'react-router-dom';
+import MaintenanceModal from './MaintenanceModal';
 
-const Toolbar = () => {
+interface ToolbarProps {
+  reservation?: ReservationDetails | null;
+  customer?: CustomerDetails | null;
+  onMaintenanceSuccess?: () => void;
+}
+
+const Toolbar = ({ reservation, customer, onMaintenanceSuccess }: ToolbarProps) => {
   const { enqueueSnackbar } = useSnackbar();
   const intl = useIntl();
   const dialogs = useDialogs();
   const { id } = useParams();
   const navigate = useAppRouting();
+  const [isMaintenanceModalOpen, setIsMaintenanceModalOpen] = useState(false);
+
+  const handleOpenMaintenanceModal = () => {
+    if (reservation) {
+      setIsMaintenanceModalOpen(true);
+    }
+  };
+
+  const handleMaintenanceSuccess = () => {
+    onMaintenanceSuccess?.();
+    setIsMaintenanceModalOpen(false);
+  };
 
   return (
     <div>
@@ -28,11 +49,13 @@ const Toolbar = () => {
             </button>
           </a>
 
-          <button>
-            <button className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium border-2 border-[#1BC5BD] rounded-md">
-              <MaintenanceIcon className="w-4 h-4" />
-              <FormattedMessage id="VEHICLE.TOOLBAR.MAINTENANCE" />
-            </button>
+          <button
+            onClick={handleOpenMaintenanceModal}
+            disabled={!reservation}
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium border-2 border-[#1BC5BD] rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#1BC5BD] hover:text-white transition-colors"
+          >
+            <MaintenanceIcon className="w-4 h-4" />
+            <FormattedMessage id="VEHICLE.TOOLBAR.MAINTENANCE" />
           </button>
 
           <button className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium border-2 border-red-500 rounded-md">
@@ -75,6 +98,19 @@ const Toolbar = () => {
           </button>
         </div>
       </div>
+
+      {/* Maintenance Modal */}
+      {reservation && (
+        <MaintenanceModal
+          open={isMaintenanceModalOpen}
+          onClose={() => setIsMaintenanceModalOpen(false)}
+          reservationId={reservation.id}
+          customerId={reservation.customerId}
+          customerName={customer?.fullName || reservation.customerFullName || 'Unknown Customer'}
+          vehiclePlate={reservation.vehiclePlate || 'No Plate'}
+          onSuccess={handleMaintenanceSuccess}
+        />
+      )}
     </div>
   );
 };

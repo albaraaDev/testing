@@ -1,57 +1,59 @@
-import { ReactElement } from 'react';
-import { Navigate, Route, Routes } from 'react-router';
 import { DashboardPage } from '@/pages/dashboards';
 import { User } from '@/pages/user';
 import { Vehicles } from '@/pages/vehicle';
+import { ReactElement } from 'react';
+import { Navigate, Route, Routes } from 'react-router';
 
 import { Driver } from '@/pages/driver';
 import { MaintenancePage } from '@/pages/maintenance';
 
-import { AddUser } from '@/pages/user/add-user';
 import { AddDriver } from '@/pages/driver/add-driver';
+import { AddUser } from '@/pages/user/add-user';
 import { AddVehicle } from '@/pages/vehicle/add-vehicle';
 
 import { AuthPage } from '@/auth';
 import { RequireAuth } from '@/auth/RequireAuth';
-import { Demo1Layout } from '@/layouts/demo1';
+import { RequireRole } from '@/auth/RequireRole';
 import { ErrorsRouting } from '@/errors';
-import { MonitoringPage } from '@/pages/monitoring/MonitoringPage';
-import UserDetailsPage from '@/pages/user/blocks/UserDetailsPage';
-import VehicleDetailsPage from '@/pages/vehicle/vehicle-details';
-import DriverDetailsPage from '@/pages/driver/DriverDetailsPage';
-import { TripsPage } from '@/pages/trips/TripsPage';
-import MaintenanceDetailsPage from '@/pages/maintenance/view-maintenance/MaintenanceDetailsPage';
-import { GeofencePage } from '@/pages/geofence/GeofencePage';
+import { Demo1Layout } from '@/layouts/demo1';
 import { Device } from '@/pages/device';
 import DeviceDetailsPage from '@/pages/device/DeviceDetailsPage';
 import { AddDevice } from '@/pages/device/add-device';
-import { RequireRole } from '@/auth/RequireRole';
+import DriverDetailsPage from '@/pages/driver/DriverDetailsPage';
+import { GeofencePage } from '@/pages/geofence/GeofencePage';
+import MaintenanceDetailsPage from '@/pages/maintenance/view-maintenance/MaintenanceDetailsPage';
+import { MonitoringPage } from '@/pages/monitoring/MonitoringPage';
 import PrivacyPolicyPage from '@/pages/privacy-policy';
+import { TripsPage } from '@/pages/trips/TripsPage';
+import UserDetailsPage from '@/pages/user/blocks/UserDetailsPage';
 import { AddVehicleScratches } from '@/pages/vehicle/add-vehicle/AddVehicleScratches';
+import VehicleDetailsPage from '@/pages/vehicle/vehicle-details';
 
-import { MaintenanceTypeDetailsPage, MaintenanceTypePage } from '@/pages/maintenance-types';
-import { AddMaintenance } from '@/pages/maintenance/add-maintenance/AddMaintenance';
-import { AddMaintenanceType } from '@/pages/maintenance-types/add-maintenance-type/AddMaintenanceType';
+import { isAppRentACar } from '@/config/apptype';
+import { AccountPermissionsCheckPage, AccountRolesPage } from '@/pages/account';
+import { AdditionalServicesPage } from '@/pages/additional-services';
+import { Customers } from '@/pages/customer';
+import { AddCustomer } from '@/pages/customer/add-customer';
+import CustomerDetailsPage from '@/pages/customer/customer-details/CustomerDetailsPage';
 import { AddGeofence } from '@/pages/geofence/add-geofence';
-import ReportsPage from '@/pages/reports/ReportsPage';
+import { InsurancePage } from '@/pages/insurance';
+import { MaintenanceTypeDetailsPage, MaintenanceTypePage } from '@/pages/maintenance-types';
+import { AddMaintenanceType } from '@/pages/maintenance-types/add-maintenance-type/AddMaintenanceType';
+import { AddMaintenance } from '@/pages/maintenance/add-maintenance/AddMaintenance';
 import ManageDevices from '@/pages/management/manage-devices';
-import { ReplayPage } from '@/pages/replay/ReplayPage';
+import ManageDistributors from '@/pages/management/manage-distributors';
 import ManageNotifications from '@/pages/management/manage-notifications';
 import ManageUsersAndDevices from '@/pages/management/manage-users-and-devices';
 import ManageUsers from '@/pages/management/manage-users/index';
-import ManageDistributors from '@/pages/management/manage-distributors';
+import { ModificationRequests } from '@/pages/modification-requests';
+import { ReplayPage } from '@/pages/replay/ReplayPage';
+import ReportsPage from '@/pages/reports/ReportsPage';
+import { Reservations } from '@/pages/reservation';
+import { AddReservation } from '@/pages/reservation/add-reservation';
+import ReservationDetailsPage from '@/pages/reservation/customer-details/ReservationDetailsPage';
+import { HandOver } from '@/pages/reservation/handover';
 import { WorkingHours } from '@/pages/working-hours';
 import { AddWorkingHours } from '@/pages/working-hours/add-working-hours';
-import { AccountPermissionsCheckPage, AccountRolesPage } from '@/pages/account';
-import { ModificationRequests } from '@/pages/modification-requests';
-import { Customers } from '@/pages/customer';
-import { isAppRentACar } from '@/config/apptype';
-import { AddCustomer } from '@/pages/customer/add-customer';
-import CustomerDetailsPage from '@/pages/customer/customer-details/CustomerDetailsPage';
-import { Reservations } from '@/pages/reservation';
-import ReservationDetailsPage from '@/pages/reservation/customer-details/ReservationDetailsPage';
-import { AddReservation } from '@/pages/reservation/add-reservation';
-import { HandOver } from '@/pages/reservation/handover';
 
 const AppRoutingSetup = (): ReactElement => {
   return (
@@ -93,7 +95,10 @@ const AppRoutingSetup = (): ReactElement => {
           )}
           {isAppRentACar && <Route path="/reservations/edit/:id" element={<AddReservation />} />}
           {isAppRentACar && <Route path="/reservations/handover/:id" element={<HandOver />} />}
-
+          {isAppRentACar && (
+            <Route path="/reservations/additional-services" element={<AdditionalServicesPage />} />
+          )}
+          {isAppRentACar && <Route path="/reservations/insurance" element={<InsurancePage />} />}
           <Route path="/vehicles/edit-scratches/:id" element={<AddVehicleScratches />} />
           <Route path="/working-hours/list" element={<WorkingHours />} />
           <Route path="/working-hours/create" element={<AddWorkingHours />} />

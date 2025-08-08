@@ -189,7 +189,11 @@ const ReservationDetailsPage = () => {
 
   return (
     <Container className="mb-10 flex flex-col gap-6">
-      <Toolbar />
+      <Toolbar
+        reservation={reservation}
+        customer={customer}
+        onMaintenanceSuccess={refetchReservation}
+      />
       <ReservationCustomerDetail reservation={reservation} customer={customer} />
       {reservationMetrics && (
         <VehicleMetrics reservationMetrics={reservationMetrics} mode="reservation" />

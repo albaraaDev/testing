@@ -103,6 +103,14 @@ export let MENU_SIDEBAR: TMenuConfig = [
           {
             title: 'SIDEBAR.MENU.RESERVATION.ADD_RESERVATION',
             path: '/reservations/add-reservation'
+          },
+          {
+            title: 'SIDEBAR.MENU.RESERVATION.ADDITIONAL_SERVICES',
+            path: '/reservations/additional-services'
+          },
+          {
+            title: 'SIDEBAR.MENU.RESERVATION.INSURANCE',
+            path: '/reservations/insurance'
           }
         ]
       }

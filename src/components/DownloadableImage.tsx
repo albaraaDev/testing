@@ -1,6 +1,7 @@
 import { getDocumentBase64 } from '@/api/documents';
 import { CircularProgress } from '@mui/material';
 import React, { DetailedHTMLProps, useEffect, useState } from 'react';
+import { KeenIcon } from './keenicons';
 
 export const DownloadableImage = ({
   src,
@@ -24,7 +25,7 @@ export const DownloadableImage = ({
   if (loading) {
     return (
       <div className="grid place-content-center size-full">
-        <CircularProgress />
+        <KeenIcon icon="loading" className="animate-spin text-gray-400" />
       </div>
     );
   }

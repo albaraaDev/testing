@@ -41,6 +41,7 @@ export interface TDataGridProps<TData extends object> {
   serverSide?: boolean;
   onFetchData?: (params: any) => Promise<any>;
   supplementaryHeaderRow?: ReactNode;
+  customFirstRow?: ReactNode;
 }
 
 const DataGrid = memo(<TData extends object>(props: TDataGridProps<TData>) => {
